@@ -7,8 +7,8 @@ public interface ICategoryRepository
     Task<IEnumerable<Category>> GetCategoryiesAsync();
     Task<Category> GetCategoriesByIdAsync(int id);
 
-    Task<IEnumerable<Category>> GetProdutsCategoryAsync();
+    Task<IEnumerable<Category>> GetProductsCategoryAsync();
     Task<Category> Create(Category Category);
     Task<Category> Update(Category Category);
-    Task<Category> Delete(int id);
+    Task<Category> Delete(Category Category);
 }
