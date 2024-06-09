@@ -8,7 +8,7 @@ public sealed class Category : BaseEntity
     public string Description { get; private set; }
     public ICollection<Product> Products { get; private set; }
 
-    public Category(int id, string name, string description)
+    public Category(int id, string name, string description): base(id)
     {
         ValidateCategoryDomain(id, name, description);
     }
