@@ -1,8 +1,11 @@
-﻿using Domain.Interfaces;
+﻿using Application.Interfaces;
+using Application.Mappings;
+using Application.Services;
+using AutoMapper;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MySqlConnector;
 using Repository.Context;
 using Repository.Repositories;
 
@@ -12,7 +15,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        string sqlConnection = configuration.GetConnectionString("DefaultConnection");
+        string sqlConnection = configuration.GetConnectionString("DefaultConnection")!;
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseMySql(sqlConnection, ServerVersion.AutoDetect(sqlConnection),
@@ -20,6 +23,12 @@ public static class DependencyInjection
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+
+        services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+
+        services.AddAutoMapper(typeof(CategoryMapping));
+        services.AddAutoMapper(typeof(ProductMapping));
 
         return services;
     }
